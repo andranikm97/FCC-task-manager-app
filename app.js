@@ -5,7 +5,7 @@ const tasks = require('./routes/tasks');
 require('dotenv').config();
 
 // Middleware
-
+const dbConnect = require('./db/connect');
 app.use(express.json());
 
 // ROUTES (/api/v1/...)
