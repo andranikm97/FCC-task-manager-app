@@ -1,6 +1,11 @@
 const Task = require('../models/task');
-const getAllTasks = (req, res) => {
-  res.send('all items');
+const getAllTasks = async (req, res) => {
+  try {
+    const existingTasks = await Task.find({});
+    res.status(200).json({ existingTasks });
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
 const postTask = async (req, res) => {
@@ -25,10 +30,20 @@ const deleteTask = (req, res) => {
   res.send('delete task');
 };
 
+const deleteAllTasks = async (req, res) => {
+  try {
+    const deletedTasks = await Task.deleteMany({});
+    res.status(200).json({ deletedTasks });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   getAllTasks,
   postTask,
   getTask,
   updateTask,
   deleteTask,
+  deleteAllTasks,
 };

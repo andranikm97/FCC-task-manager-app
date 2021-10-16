@@ -5,14 +5,17 @@ const TaskSchema = new mongoose.Schema({
     type: String,
     required: [true, 'must provide a name'],
     trim: true,
-    minlength: [20, 'name cannot be more than 20 chars'],
-    maxlength: [1, 'name cannot be less than 1 char'],
+    minlength: [1, 'name cannot be more than 1 char'],
+    maxlength: [20, 'name cannot be less than 20 chars'],
   },
   completed: {
     type: Boolean,
     default: false,
   },
-  date: Date,
+  date: {
+    type: Date,
+    default: new Date(),
+  },
 });
 
 const TaskModel = mongoose.model('Task', TaskSchema);
