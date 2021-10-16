@@ -5,7 +5,6 @@ const TaskSchema = new mongoose.Schema({
     type: String,
     required: [true, 'must provide a name'],
     trim: true,
-    minlength: [1, 'name cannot be more than 1 char'],
     maxlength: [20, 'name cannot be less than 20 chars'],
   },
   completed: {
@@ -14,7 +13,7 @@ const TaskSchema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    default: new Date(),
+    default: Date.now,
   },
 });
 

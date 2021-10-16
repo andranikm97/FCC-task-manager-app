@@ -7,17 +7,7 @@ require('dotenv').config();
 // Middleware
 const connectToDB = require('./db/connect');
 app.use(express.json());
-
-// ROUTES (/api/v1/...)
-// get all tasks
-// post a task
-// get a single task
-// update a task
-// delete a task
-
-app.get('/', (req, res) => {
-  res.send('Task manager app.');
-});
+// app.use(express.static('public'));
 app.use('/api/v1/tasks', tasks);
 
 const port = process.env.PORT;
