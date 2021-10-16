@@ -4,11 +4,12 @@ const getAllTasks = (req, res) => {
 };
 
 const postTask = async (req, res) => {
-  if (req.body) {
+  try {
     const task = await Task.create(req.body);
+    res.status(201).json({ task });
+  } catch (e) {
+    res.status(500).send(e);
   }
-
-  res.status(201).json({ task });
 };
 
 const getTask = (req, res) => {
