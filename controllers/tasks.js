@@ -8,6 +8,15 @@ const getAllTasks = async (req, res) => {
   }
 };
 
+const deleteAllTasks = async (req, res) => {
+  try {
+    const deletedTasks = await Task.deleteMany({});
+    res.status(200).json({ deletedTasks });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 const postTask = async (req, res) => {
   try {
     const task = await Task.create(req.body);
@@ -34,10 +43,6 @@ const getTask = async (req, res) => {
   }
 };
 
-const updateTask = (req, res) => {
-  res.send('update task');
-};
-
 const deleteTask = async (req, res) => {
   try {
     const { id: taskID } = req.params;
@@ -55,12 +60,25 @@ const deleteTask = async (req, res) => {
   }
 };
 
-const deleteAllTasks = async (req, res) => {
+const updateTask = async (req, res) => {
   try {
-    const deletedTasks = await Task.deleteMany({});
-    res.status(200).json({ deletedTasks });
+    const { id: taskID } = req.params;
+
+    const task = await Task.findOneAndUpdate({ _id: taskID }, req.body, {
+      new: true, // return the new value
+      runValidators: true, // run validators, check conditions on data types
+      useFindAndModify: true,
+    });
+
+    if (!task) {
+      return res
+        .status(404)
+        .json({ Message: `The requested ID (${taskID}) was not found.` });
+    }
+
+    res.status(200).json({ id: taskID, task });
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({ Message: error });
   }
 };
 
